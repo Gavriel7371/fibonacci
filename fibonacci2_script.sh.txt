@@ -1,0 +1,30 @@
+#!/bin/bash
+
+function is_fibonacci {
+    local n=$1
+    local a=0
+    local b=1
+    local index=1
+
+    while [ $b -lt $n ]; do
+        local temp=$b
+        b=$((a + b))
+        a=$temp
+        index=$((index + 1))
+    done
+    if [ $b -eq $n ]; then
+        echo $index
+    else
+        echo "0"
+    fi
+}
+
+read -p "Enter a number: " number
+
+index=$(is_fibonacci $number)
+
+if [ $index -ne 0 ]; then
+    echo "$number is part of the Fibonacci sequence at index $index"
+else
+    echo "$number is not part of the Fibonacci sequence"
+fi
