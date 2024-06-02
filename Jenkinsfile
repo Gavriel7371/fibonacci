@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git https://github.com/Gavriel7371/fibonacci/blob/main/fibonacci2_script.sh.txt  // Replace with your repository URL
+                git  https://github.com/Gavriel7371/fibonacci.git  // Replace with your repository URL
             }
         }
 
