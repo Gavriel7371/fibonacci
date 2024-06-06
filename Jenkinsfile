@@ -58,6 +58,6 @@ pipeline {
                 reportFiles: OUTPUT_FILE,
                 reportName: 'Shell Script Output'
             ])
-        
+        }
     }
 }
