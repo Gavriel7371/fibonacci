@@ -9,17 +9,17 @@ pipeline {
         OUTPUT_FILE = 'output.html'
     }
 
-    stages {
+
         stage('Clone Repository') {
             steps {
-                git  "https://github.com/Gavriel7371/fibonacci.git"  // Replace with your repository URL
+                git 'https://github.com/Gavriel7371/fibonacci.git'  // Replace with your repository URL
             }
         }
 
         stage('Run Shell Script') {
             steps {
                 script {
-                    def output = sh(script: "bash fibonacci2_script.sh.txt ${params.user_input}", returnStdout: true).trim()
+                    def output = sh(script: "bash fibonacci.txt ${params.user_input}", returnStdout: true).trim()
                     writeFile file: OUTPUT_FILE, text: "<html><body><h1>Output</h1><p>${output}</p></body></html>"
                 }
             }
@@ -58,6 +58,6 @@ pipeline {
                 reportFiles: OUTPUT_FILE,
                 reportName: 'Shell Script Output'
             ])
-        }
-    }
+        }
+    }
 }
