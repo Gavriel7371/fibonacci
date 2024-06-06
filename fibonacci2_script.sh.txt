@@ -18,14 +18,14 @@ function is_fibonacci {
         echo "0"
     fi
 }
- number=$1
+ user_input=$1
 
-index=$(is_fibonacci $number)
+index=$(is_fibonacci $user_input)
 
 if [ $index -ne 0 ]; then
-    echo "$number is part of the Fibonacci sequence at index $index"
+    echo "$user_input is part of the Fibonacci sequence at index $index"
 else
-    echo "$number is not part of the Fibonacci sequence"
+    echo "$user_input is not part of the Fibonacci sequence"
 fi#!/bin/bash
 
 function is_fibonacci {
