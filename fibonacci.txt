@@ -1,58 +1,64 @@
 #!/bin/bash
 
-function is_fibonacci {
-    local n=$1
-    local a=0
-    local b=1
-    local index=1
-
-    while [ $b -lt $n ]; do
-        local temp=$b
-        b=$((a + b))
-        a=$temp
-        index=$((index + 1))
-    done
-    if [ $b -eq $n ]; then
-        echo $index
+is_perfect_square() {
+    number=$1
+    square_root=$(echo "scale=0; sqrt($number)" | bc)
+    if [ $((square_root * square_root)) -eq $number ]; then
+        return 0  # Return success if the number is a perfect square
     else
-        echo "0"
-    fi
-}
- user_input=$1
-
-index=$(is_fibonacci $user_input)
-
-if [ $index -ne 0 ]; then
-    echo "$user_input is part of the Fibonacci sequence at index $index"
-else
-    echo "$user_input is not part of the Fibonacci sequence"
-fi#!/bin/bash
-
-function is_fibonacci {
-    local n=$1
-    local a=0
-    local b=1
-    local index=1
-
-    while [ $b -lt $n ]; do
-        local temp=$b
-        b=$((a + b))
-        a=$temp
-        index=$((index + 1))
-    done
-    if [ $b -eq $n ]; then
-        echo $index
-    else
-        echo "0"
+        return 1  # Return failure if the number is not a perfect square
     fi
 }
 
-read -p "Enter a number: " number
+is_fibonacci() {
+    candidate=$1
 
-index=$(is_fibonacci $number)
+    if [ "$candidate" -eq 0 ]; then
+        echo "0 is not a Fibonacci number."
+        return 1
+    fi
 
-if [ $index -ne 0 ]; then
-    echo "$number is part of the Fibonacci sequence at index $index"
+    test_value1=$((5 * candidate * candidate + 4))
+    test_value2=$((5 * candidate * candidate - 4))
+
+    if is_perfect_square "$test_value1" || is_perfect_square "$test_value2"; then
+        echo "$candidate is a Fibonacci number."
+        return 0
+    else
+        echo "$candidate is not a Fibonacci number."
+        return 1
+    fi
+}
+
+find_fibonacci_index() {
+    fibonacci_number=$1
+
+    fib1=0  # Start with the first Fibonacci number (0)
+    fib2=1  # Second Fibonacci number (1)
+    fib_index=1  # Start with index 1 for the second Fibonacci number (1)
+
+    while [ "$fib1" -lt "$fibonacci_number" ]; do
+        temp_fib=$fib1
+        fib1=$fib2
+        fib2=$((temp_fib + fib2))
+        fib_index=$((fib_index + 1))
+    done
+
+    if [ "$fib1" -eq "$fibonacci_number" ]; then
+        echo "$fibonacci_number is at index $fib_index in the Fibonacci sequence."
+    else
+        echo "There was an error finding the index for $fibonacci_number."
+    fi
+}
+
+input_number=$1
+
+if [[ $input_number =~ ^[0-9]+$ ]]; then
+    # Call the is_fibonacci function with the user input
+    if is_fibonacci "$input_number"; then
+        find_fibonacci_index "$input_number"
+    fi
 else
-    echo "$number is not part of the Fibonacci sequence"
+    echo "Invalid input. Please enter a positive integer."
+    exit 1
 fi
